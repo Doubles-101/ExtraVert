@@ -51,7 +51,46 @@ string greeting = @"Welcome to Pete's Plants!
 Where plants are our priority";
 
 Console.WriteLine(greeting);
-ListPlants();
+string choice = null;
+while (choice != "0")
+{
+    Console.WriteLine(@"Choose an option:
+                        0. Exit
+                        1. Display All Plants
+                        2. Post a Plant to be Adopted
+                        3. Adopt a Plant
+                        4. Delist a Plant");
+    choice = Console.ReadLine();
+
+    try 
+    {
+        switch (choice)
+        {
+            case "0":
+                Console.WriteLine("Goodbye");
+                break;
+            case "1":
+                ListPlants();
+                break;
+            case "2":
+                Console.Clear();
+                throw new NotImplementedException("Post a Plant to be Adopted feature is not yet implemented.");
+            
+            case "3":
+                Console.Clear();
+                throw new NotImplementedException("Adopt a Plant feature is not yet implemented.");
+            
+            case "4":
+                Console.Clear();
+                throw new NotImplementedException("Delist a Plant feature is not yet implemented.");
+        }
+    }
+    catch (NotImplementedException ex)
+    {
+        Console.Clear();
+        Console.WriteLine(ex.Message);
+    }
+}
 
 void ListPlants()
 {
