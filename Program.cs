@@ -70,11 +70,13 @@ while (choice != "0")
                 Console.WriteLine("Goodbye");
                 break;
             case "1":
+                Console.Clear();
                 ListPlants();
                 break;
             case "2":
                 Console.Clear();
-                throw new NotImplementedException("Post a Plant to be Adopted feature is not yet implemented.");
+                PostPlant();
+                break;
             
             case "3":
                 Console.Clear();
@@ -96,6 +98,49 @@ void ListPlants()
 {
     for (int i = 0; i < plants.Count; i++)
     {
-        Console.WriteLine($"{i + 1}. {plants[i].Species}");
+        Console.WriteLine($"{i + 1}. {plants[i].Species} in {plants[i].City} {(plants[i].Sold ? "was sold" : "is available")} for ${plants[i].AskingPrice}");
     }
+}
+
+void PostPlant()
+{
+    Console.WriteLine("Enter Species: ");
+    string species = Console.ReadLine();
+
+    Console.WriteLine("Enter Light Needs (1-5): ");
+    int lightNeeds;
+    while (!int.TryParse(Console.ReadLine(), out lightNeeds) || lightNeeds < 1 || lightNeeds > 5)
+    {
+        Console.WriteLine("Please enter a valid number between 1 and 5.");
+    }
+
+    Console.WriteLine("Enter an Asking Price: ");
+    decimal askingPrice;
+    while (!decimal.TryParse(Console.ReadLine(), out askingPrice))
+    {
+        Console.WriteLine("Please enter a valid price.");
+    }
+
+    Console.WriteLine("Enter City: ");
+    string city = Console.ReadLine();
+
+    Console.Write("Enter ZIP Code: ");
+    int zip;
+    while (!int.TryParse(Console.ReadLine(), out zip))
+    {
+        Console.WriteLine("Please enter a valid ZIP code.");
+    }
+
+    Plant newPlant = new Plant()
+    {
+        Species = species,
+        LightNeeds = lightNeeds,
+        AskingPrice = askingPrice,
+        City = city,
+        ZIP = zip,
+        Sold = false
+    };
+
+    plants.Add(newPlant);
+    Console.WriteLine($"{species} has been added to the list of plants available for adoption.");
 }
