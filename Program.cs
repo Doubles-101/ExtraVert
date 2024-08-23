@@ -47,10 +47,29 @@
     }
 };
 
+Random random = new Random();
+int randomInteger = random.Next(0, plants.Count);
+
+while (plants[randomInteger].Sold){
+    randomInteger = random.Next(0, plants.Count);
+}
+
 string greeting = @"Welcome to Pete's Plants!
 Where plants are our priority";
 
+string plantOfTheDay = @$"
+
+Our plant of the day:
+Species: {plants[randomInteger].Species}
+City: {plants[randomInteger].City}
+Light Needs: {plants[randomInteger].LightNeeds}
+Price: {plants[randomInteger].AskingPrice}
+
+";
+
+Console.Clear();
 Console.WriteLine(greeting);
+Console.WriteLine(plantOfTheDay);
 string choice = null;
 while (choice != "0")
 {
