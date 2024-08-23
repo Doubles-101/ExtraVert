@@ -85,7 +85,8 @@ while (choice != "0")
             
             case "4":
                 Console.Clear();
-                throw new NotImplementedException("Delist a Plant feature is not yet implemented.");
+                DelistPlant();
+                break;
         }
     }
     catch (NotImplementedException ex)
@@ -164,4 +165,20 @@ void AdoptPlant()
 
     plants[plantChoice - 1].Sold = true;
     Console.WriteLine($"You have adopted {plants[plantChoice - 1].Species}");
+}
+
+void DelistPlant()
+{
+    ListPlants();
+
+    Console.WriteLine("Enter the plant you wish to delist");
+
+    int delistChoice;
+    while (!int.TryParse(Console.ReadLine(), out delistChoice) || delistChoice < 1 || delistChoice > plants.Count)
+    {
+        Console.WriteLine("Please enter a valid number of the plant you wish to delist");
+    }
+
+    plants.RemoveAt(delistChoice - 1);
+    Console.WriteLine("The plant has been successfully removed");
 }
