@@ -78,7 +78,8 @@ while (choice != "0")
                         1. Display All Plants
                         2. Post a Plant to be Adopted
                         3. Adopt a Plant
-                        4. Delist a Plant");
+                        4. Delist a Plant
+                        5. Search by Light Need");
     choice = Console.ReadLine();
 
     try 
@@ -105,6 +106,11 @@ while (choice != "0")
             case "4":
                 Console.Clear();
                 DelistPlant();
+                break;
+
+            case "5":
+                Console.Clear();
+                LightNeedSearch();
                 break;
         }
     }
@@ -200,4 +206,24 @@ void DelistPlant()
 
     plants.RemoveAt(delistChoice - 1);
     Console.WriteLine("The plant has been successfully removed");
+}
+
+void LightNeedSearch()
+{
+    Console.WriteLine("Enter a maximum light needs number (between 1 and 5)");
+
+    int lightNeedChoice;
+    while (!int.TryParse(Console.ReadLine(), out lightNeedChoice) || lightNeedChoice < 1 || lightNeedChoice > 5)
+    {
+        Console.WriteLine("Please enter a valid number between 1 and 5");
+    }
+
+    foreach (var plant in plants)
+    {
+        if (plant.LightNeeds <= lightNeedChoice)
+        {
+            Console.WriteLine($"{plant.Species} in {plant.City} {(plant.Sold ? "was sold" : "is available")} for ${plant.AskingPrice}. Light Need: {plant.LightNeeds}");
+        }
+    }
+
 }
