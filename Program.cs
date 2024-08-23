@@ -80,7 +80,8 @@ while (choice != "0")
             
             case "3":
                 Console.Clear();
-                throw new NotImplementedException("Adopt a Plant feature is not yet implemented.");
+                AdoptPlant();
+                break;
             
             case "4":
                 Console.Clear();
@@ -143,4 +144,24 @@ void PostPlant()
 
     plants.Add(newPlant);
     Console.WriteLine($"{species} has been added to the list of plants available for adoption.");
+}
+
+void AdoptPlant()
+{
+    for (int i = 0; i < plants.Count; i++)
+    {
+        if (!plants[i].Sold) {
+            Console.WriteLine($"{i + 1}. {plants[i].Species} in {plants[i].City} {(plants[i].Sold ? "was sold" : "is available")} for ${plants[i].AskingPrice}");
+        }
+    }
+
+    Console.WriteLine("Enter your the plant you wish to adopt: ");
+    int plantChoice;
+    while (!int.TryParse(Console.ReadLine(), out plantChoice) || plantChoice < 1 || plantChoice > plants.Count || plants[plantChoice -1].Sold) 
+    {
+        Console.WriteLine("Please enter a valid number of an available plant");
+    }
+
+    plants[plantChoice - 1].Sold = true;
+    Console.WriteLine($"You have adopted {plants[plantChoice - 1].Species}");
 }
