@@ -7,7 +7,8 @@
         AskingPrice = 15.99M,
         City = "Houston",
         ZIP = 2156788,
-        Sold = false
+        Sold = false,
+        AvailableUntil = new DateTime(2024, 12, 31)
     },
     new Plant()
     {
@@ -16,7 +17,8 @@
         AskingPrice = 19.99M,
         City = "Miami",
         ZIP = 1234567,
-        Sold = false
+        Sold = false,
+        AvailableUntil = new DateTime(2024, 11, 15)
     },
     new Plant()
     {
@@ -25,7 +27,8 @@
         AskingPrice = 29.99M,
         City = "Portland",
         ZIP = 4047899,
-        Sold = true
+        Sold = true,
+        AvailableUntil = new DateTime(2024, 10, 20)
     },
     new Plant()
     {
@@ -34,7 +37,8 @@
         AskingPrice = 59.99M,
         City = "Grand Rapids",
         ZIP = 215678,
-        Sold = false
+        Sold = false,
+        AvailableUntil = new DateTime(2024, 9, 15)
     },
     new Plant()
     {
@@ -43,7 +47,8 @@
         AskingPrice = 99.99M,
         City = "Nashville",
         ZIP = 321716,
-        Sold = false
+        Sold = false,
+        AvailableUntil = new DateTime(2024, 8, 31)
     }
 };
 
@@ -64,6 +69,7 @@ Species: {plants[randomInteger].Species}
 City: {plants[randomInteger].City}
 Light Needs: {plants[randomInteger].LightNeeds}
 Price: {plants[randomInteger].AskingPrice}
+Available Until: {plants[randomInteger].AvailableUntil}
 
 ";
 
@@ -125,7 +131,7 @@ void ListPlants()
 {
     for (int i = 0; i < plants.Count; i++)
     {
-        Console.WriteLine($"{i + 1}. {plants[i].Species} in {plants[i].City} {(plants[i].Sold ? "was sold" : "is available")} for ${plants[i].AskingPrice}");
+        Console.WriteLine($"{i + 1}. {plants[i].Species} in {plants[i].City} {(plants[i].Sold ? "was sold" : "is available")} for ${plants[i].AskingPrice}. Available until: {plants[i].AvailableUntil}");
     }
 }
 
@@ -157,6 +163,28 @@ void PostPlant()
     {
         Console.WriteLine("Please enter a valid ZIP code.");
     }
+Console.WriteLine("Enter the year when the plant will be available until: ");
+    int year;
+    while (!int.TryParse(Console.ReadLine(), out year) || year < DateTime.Now.Year)
+    {
+        Console.WriteLine("Please enter a valid year.");
+    }
+
+    Console.WriteLine("Enter the month (1-12) when the plant will be available until: ");
+    int month;
+    while (!int.TryParse(Console.ReadLine(), out month) || month < 1 || month > 12)
+    {
+        Console.WriteLine("Please enter a valid month.");
+    }
+
+    Console.WriteLine("Enter the day (1-31) when the plant will be available until: ");
+    int day;
+    while (!int.TryParse(Console.ReadLine(), out day) || day < 1 || day > DateTime.DaysInMonth(year, month))
+    {
+        Console.WriteLine("Please enter a valid day.");
+    }
+
+    DateTime availableUntil = new DateTime(year, month, day);
 
     Plant newPlant = new Plant()
     {
@@ -165,8 +193,10 @@ void PostPlant()
         AskingPrice = askingPrice,
         City = city,
         ZIP = zip,
-        Sold = false
+        Sold = false,
+        AvailableUntil = availableUntil
     };
+
 
     plants.Add(newPlant);
     Console.WriteLine($"{species} has been added to the list of plants available for adoption.");
