@@ -48,7 +48,7 @@
         City = "Nashville",
         ZIP = 321716,
         Sold = false,
-        AvailableUntil = new DateTime(2024, 8, 31)
+        AvailableUntil = new DateTime(2024, 8, 1)
     }
 };
 
@@ -206,14 +206,14 @@ void AdoptPlant()
 {
     for (int i = 0; i < plants.Count; i++)
     {
-        if (!plants[i].Sold) {
+        if (!plants[i].Sold && plants[i].AvailableUntil >= DateTime.Now) {
             Console.WriteLine($"{i + 1}. {plants[i].Species} in {plants[i].City} {(plants[i].Sold ? "was sold" : "is available")} for ${plants[i].AskingPrice}");
         }
     }
 
     Console.WriteLine("Enter your the plant you wish to adopt: ");
     int plantChoice;
-    while (!int.TryParse(Console.ReadLine(), out plantChoice) || plantChoice < 1 || plantChoice > plants.Count || plants[plantChoice -1].Sold) 
+    while (!int.TryParse(Console.ReadLine(), out plantChoice) || plantChoice < 1 || plantChoice > plants.Count || plants[plantChoice -1].Sold || plants[plantChoice -1].AvailableUntil <= DateTime.Now) 
     {
         Console.WriteLine("Please enter a valid number of an available plant");
     }
