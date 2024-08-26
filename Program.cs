@@ -85,7 +85,8 @@ while (choice != "0")
                         2. Post a Plant to be Adopted
                         3. Adopt a Plant
                         4. Delist a Plant
-                        5. Search by Light Need");
+                        5. Search by Light Need
+                        6. Plant Stats");
     choice = Console.ReadLine();
 
     try 
@@ -117,6 +118,11 @@ while (choice != "0")
             case "5":
                 Console.Clear();
                 LightNeedSearch();
+                break;
+
+            case "6":
+                Console.Clear();
+                PlantStats();
                 break;
         }
     }
@@ -255,5 +261,82 @@ void LightNeedSearch()
             Console.WriteLine($"{plant.Species} in {plant.City} {(plant.Sold ? "was sold" : "is available")} for ${plant.AskingPrice}. Light Need: {plant.LightNeeds}");
         }
     }
+
+}
+
+void PlantStats()
+{
+
+    /* Lowest Price */
+    string lowestPricePlant = "Plant";
+    decimal lowestPrice = 100000.00M;
+    foreach (var plant in plants)
+    {
+        if (plant.AskingPrice < lowestPrice)
+        {
+            lowestPrice = plant.AskingPrice;
+            lowestPricePlant = plant.Species;
+        }
+    }
+
+    /* Plants Available */
+    int numberOfPlantsAvailable = 0;
+    foreach (var plant in plants)
+    {
+        if (!plant.Sold && plant.AvailableUntil >= DateTime.Now)
+        {
+            numberOfPlantsAvailable += 1;
+        }
+    }
+
+    /* Highest Light Need */
+    string plantWithHighestLightNeeds = "Plant";
+    int highestLightNeed = 0;
+    foreach (var plant in plants)
+    {
+        if (plant.LightNeeds > highestLightNeed && !plant.Sold && plant.AvailableUntil >= DateTime.Now)
+        {
+            highestLightNeed = plant.LightNeeds;
+            plantWithHighestLightNeeds = plant.Species;
+        }
+    }
+
+    /* average Light Need */
+    double averageLightNeed = 0;
+    double lightNeedTotal = 0;
+    foreach (var plant in plants)
+    {
+        if (!plant.Sold && plant.AvailableUntil >= DateTime.Now)
+        {
+            lightNeedTotal += plant.LightNeeds;
+        }
+    }
+    averageLightNeed = lightNeedTotal / numberOfPlantsAvailable;
+
+
+    /* Percent of Plants adopted */
+    double percentageOfPlantsAdopted = 0;
+    double plantsAdopted = 0;
+    int totalPlants = plants.Count;
+    foreach (var plant in plants)
+    {
+        if (plant.Sold)
+        {
+            plantsAdopted += 1;
+        }
+    }
+    percentageOfPlantsAdopted = plantsAdopted / totalPlants;
+    percentageOfPlantsAdopted = percentageOfPlantsAdopted * 100;
+    
+
+
+    Console.WriteLine(@$"Here are the current plant stats: 
+
+    Lowest Price: {lowestPricePlant}
+    Number of Plants Available: {numberOfPlantsAvailable}
+    Plant with Highest Light Need: {plantWithHighestLightNeeds}
+    Average Light Need: {averageLightNeed}
+    Percent of Plants Adopted: {percentageOfPlantsAdopted}%
+    ");
 
 }
