@@ -178,14 +178,14 @@ Console.WriteLine("Enter the year when the plant will be available until: ");
 
     Console.WriteLine("Enter the month (1-12) when the plant will be available until: ");
     int month;
-    while (!int.TryParse(Console.ReadLine(), out month) || month < 1 || month > 12)
+    while (!int.TryParse(Console.ReadLine(), out month) || month < 1 || month > 12 || month < DateTime.Now.Month)
     {
         Console.WriteLine("Please enter a valid month.");
     }
 
     Console.WriteLine("Enter the day (1-31) when the plant will be available until: ");
     int day;
-    while (!int.TryParse(Console.ReadLine(), out day) || day < 1 || day > DateTime.DaysInMonth(year, month))
+    while (!int.TryParse(Console.ReadLine(), out day) || day < 1 || day > DateTime.DaysInMonth(year, month) || day < DateTime.Now.Day)
     {
         Console.WriteLine("Please enter a valid day.");
     }
