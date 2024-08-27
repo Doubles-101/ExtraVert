@@ -137,7 +137,7 @@ void ListPlants()
 {
     for (int i = 0; i < plants.Count; i++)
     {
-        Console.WriteLine($"{i + 1}. {plants[i].Species} in {plants[i].City} {(plants[i].Sold ? "was sold" : "is available")} for ${plants[i].AskingPrice}. Available until: {plants[i].AvailableUntil}");
+        Console.WriteLine($"{i + 1}. {PlantDetails(plants[i])} in {plants[i].City} {(plants[i].Sold ? "was sold" : "is available")} for ${plants[i].AskingPrice}. Available until: {plants[i].AvailableUntil}");
     }
 }
 
@@ -338,5 +338,14 @@ void PlantStats()
     Average Light Need: {averageLightNeed}
     Percent of Plants Adopted: {percentageOfPlantsAdopted}%
     ");
+
+}
+
+
+string PlantDetails(Plant plant)
+{
+    string plantString = plant.Species;
+
+    return plantString;
 
 }
